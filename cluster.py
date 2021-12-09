@@ -14,7 +14,7 @@ from sklearn.cluster import DBSCAN
 def read_stops(p: str):
   """
   Read in the .csv file of metro stops
-  
+
   :param p: The path to the .csv file of metro stops
   """
   return pd.read_csv(p)
@@ -24,11 +24,11 @@ def read_encodings(p: str) -> tf.Tensor:
   """
   Unpickle the Universal Sentence Encoder v4 encodings
   and return them
-  
+
   This function doesn't make any attempt to patch the security holes in `pickle`.
-  
+
   :param p: Path to the encodings
- 
+
   :returns: A Tensor of the encodings with shape (number of sentences, 512)
   """
   with open(p, 'rb') as f:
@@ -41,7 +41,7 @@ def cluster_encodings(encodings: tf.Tensor) -> np.ndarray:
   Cluster the sentence encodings using DBSCAN.
 
   :param encodings: A Tensor of sentence encodings with shape
-                    (number of sentences, 512) 
+                    (number of sentences, 512)
 
   :returns: a NumPy array of the cluster labels
   """
@@ -69,7 +69,7 @@ def plot_example(df: pd.DataFrame, labels: np.ndarray):
 
   :param df: A Pandas DataFrame of stops that has 'latitude` and 'longitude` columns
   :param labels: a NumPy array of the cluster labels
-  """ 
+  """
   with open('.mapbox_token', 'r') as f:
     token = f.read().strip()
 
@@ -82,7 +82,7 @@ def plot_example(df: pd.DataFrame, labels: np.ndarray):
                           zoom=8,
                           color_discrete_sequence=px.colors.qualitative.Dark24)
   fig.show()
-  
+
 
 def plot_venice_blvd(df: pd.DataFrame, labels: np.ndarray):
   """
@@ -101,14 +101,14 @@ def plot_venice_blvd(df: pd.DataFrame, labels: np.ndarray):
 
   fig = px.scatter_mapbox(df, lat='latitude', lon='longitude',
                           color=labels,
-                          hover_name='display_name', 
+                          hover_name='display_name',
                           center=venice_blvd,
                           zoom=12,
                           color_discrete_sequence=px.colors.qualitative.Dark24)
 
   fig.show()
-  
-  
+
+
 def main(data_path: str, enc_path: str):
   df = read_stops(data_path)
 
@@ -120,7 +120,7 @@ def main(data_path: str, enc_path: str):
   encodings = read_encodings(enc_path)
   encoding_labels = cluster_encodings(encodings)
   plot_venice_blvd(df, encoding_labels)
-  
+
 
 if __name__ == '__main__':
   import argparse

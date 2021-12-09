@@ -28,18 +28,18 @@ def query_api(q: str) -> pd.DataFrame:
     res = requests.get(base+q)
   except requests.exceptions.RequestException as e:
     raise e
-    
+
   okay_codes = [200]
   if res.status_code not in okay_codes:
     raise ValueError(f'Got {res.status_code} response, which is not one of the acceptable responses ({okay_codes})')
-   
+
   j = json.loads(res.text)
   try:
     return pd.DataFrame.from_dict(j['items'])
   except KeyError as e:
     raise e
 
-  
+
 def build_dataset() -> pd.DataFrame:
   """
   Goes through every route of the LA Metro and records the all of the stops
@@ -53,7 +53,7 @@ def build_dataset() -> pd.DataFrame:
     routes = query_api('routes')
   except (requests.exceptions.RequestException, ValueError, KeyError):
     raise RuntimeError("Couldn't get the routes")
-  
+
   # Get the list of stops for every route
   # The API doesn't provide a list of the stops,
   # only the list of stops for a specific route
@@ -74,14 +74,14 @@ def build_dataset() -> pd.DataFrame:
   # That makes me confident that this approach is good enough for
   # this quick excercise
   return stops.drop_duplicates('id')
-  
+
 
 def encode_sentences(sentences: pd.Series) -> tf.Tensor:
    """
    Uses the Universal Sentence Encoder v4 available on tfhub to encode sentences
-   
+
    :param sentences: A Pandas Series where each element is a sentence to encode
-   
+
    :returns: A Tensor of the encodings with shape (number of sentences, 512)
    """
    encode = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
@@ -91,7 +91,7 @@ def encode_sentences(sentences: pd.Series) -> tf.Tensor:
 def main(out_path: str, enc_out_path: str):
   """
   Builds a dataset of every stop in the LA Metro and writes it out as a .csv file
-  
+
   Encodes the names of the stops and saves the encodings in a .pkl file
 
   :param out_path: Where to write the resulting .csv file. This should include the name of the file.
@@ -99,12 +99,12 @@ def main(out_path: str, enc_out_path: str):
   :param enc_out_path: Where to write the pickled encodings. This should include te name of the file.
                        For example: `data/enocdings.pkl`
   """
- 
+
   try:
     df = build_dataset()
   except RuntimeError as e:
     sys.exit(e)
-  
+
   dir_path, f_path = os.path.split(out_path)
   if dir_path != '':
     os.makedirs(dir_path, exist_ok=True)
@@ -130,6 +130,6 @@ if __name__ == '__main__':
                  nargs='?',
                  default='data/encodings.pkl',
                  help="Where to save the pickled encodings. Defaults to 'data/encodings.pkl'")
-  
+
   args = p.parse_args()
   main(**vars(args))
