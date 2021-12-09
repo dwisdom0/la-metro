@@ -27,6 +27,7 @@ Points labeled `-1` aren't part of any cluster.
 Clicking on `-1` in the legend will turn off those points.
 
 
+## Cluster the stops by their name
 In the next plot, I encoded the names of all the stops using the Universal Sentence Encoder v4.
 I then clustered those encodings so that I could group the stops based on their names
 instead of their geographic position.
