@@ -12,6 +12,16 @@ $ pip install -r requirements.txt
 ```shell
 $ python build_dataset.py
 ```
+## Get a Mapbox token
+The plots rely on Mapbox to display the data.
+You can get a free token by making an account at Mapbox.
+If you don't want to bother with that, I put the plots on
+[Hugging Face](https://huggingface.co/spaces/davidwisdom/la-metro).
+
+Once you have a token, place it in a file called `.mapbox_token` and put it at the root of this project.
+```shell
+$ echo "<your_token>" > .mapbox_token
+```
 
 ## Plot the two clusterings
 ```shell
