@@ -19,6 +19,7 @@ $ python cluster.py
 ```
 
 # Description
+## Cluster the stops by their position
 First, I clustered the
 stops by their geographic location.
 The DBSCAN algorithm finds three clusters.
@@ -36,6 +37,7 @@ Sometimes, however, a stop has a name that means something to the encoder.
 When that happens, the encoding ends up too far away from the rest of the stops on that road.
 For example, the stops on Venice Blvd get clustered together,
 but the stop "Venice / Lincoln" ends up somewhere else.
+
 I assume it ends up somewhere else because the encoder recognizes "Lincoln"
 and that meaning overpowers the "Venice" meaning enough that the encoding
 is too far away from the rest of the "Venice" stops.
