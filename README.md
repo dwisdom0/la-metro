@@ -13,7 +13,7 @@ $ pip install -r requirements.txt
 $ python build_dataset.py
 ```
 
-## Plot the two clusters
+## Plot the two clusterings
 ```shell
 $ python cluster.py
 ```
