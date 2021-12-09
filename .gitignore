@@ -1,0 +1,10 @@
+# Python
+venv/
+**/__pycache__/*
+*.pyc
+
+# My data
+data/
+
+# My Mapbox token
+.mapbox_token
