@@ -21,7 +21,7 @@ $ python cluster.py
 # Description
 First, I clustered the
 stops by their geographic location.
-The algorithm finds three clusters.
+The DBSCAN algorithm finds three clusters.
 Points labeled `-1` aren't part of any cluster.
 Clicking on `-1` in the legend will turn off those points.
 
@@ -30,6 +30,8 @@ In the next plot, I encoded the names of all the stops using the Universal Sente
 I then clustered those encodings so that I could group the stops based on their names
 instead of their geographic position.
 As I expected, stops on the same road end up close enough to each other that DBSCAN can cluster them together.
+
+
 Sometimes, however, a stop has a name that means something to the encoder.
 When that happens, the encoding ends up too far away from the rest of the stops on that road.
 For example, the stops on Venice Blvd get clustered together,
